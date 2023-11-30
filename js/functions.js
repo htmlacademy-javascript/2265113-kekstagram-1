@@ -1,43 +1,45 @@
 // Функция для проверки, является ли строка палиндромом
-function isPalindrome(text) {
-  const textReverse = text.replaceAll(' ', '').toLowerCase().split('').reverse().join('');
-  return (text.replaceAll(' ', '').toLowerCase() === textReverse);
-}
+const isPalindrome = (text) => {
+  const pureText = text.replaceAll(' ', '').toLowerCase();
+  const middle = pureText.length / 2;
+
+  for (let i = 1; i <= middle; i++) {
+    if (pureText.at(i - 1) !== pureText.at(-i)) {
+      return false;
+    }
+  }
+
+  return true;
+};
 isPalindrome('Лёша на полке клопа нашёл ');
 
 // Функция, которая принимает строку, извлекает содержащиеся в ней цифры
-function extractingNumber(someObject) {
+const extractingNumber = (someObject) => {
   let someNumber = '';
-  someObject = String(someObject);
-  for (const i in someObject) {
-    if (!isNaN(parseInt(someObject[i], 10))) {
-      someNumber += someObject[i];
+  const objectToString = String(someObject).split('');
+
+  objectToString.forEach ((i) => {
+    if (!Number.isNaN(parseInt(i, 10))) {
+      someNumber += i;
     }
-  }
+  });
+
   return parseInt(someNumber, 10);
-}
+};
 extractingNumber(2023);
 
 /* Функция, которая принимает три параметра: исходную строку, минимальную
  длину и строку с добавочными символами — и возвращает
  исходную строку, дополненную указанными символами до заданной длины */
-function addressGeneration(sourceString, minLength, addSymbols) {
-  if (sourceString.length >= minLength) {
-    return sourceString;
-  } else {
-    return addSymbols.slice(0, ((minLength - sourceString.length) % addSymbols.length)) + addSymbols.repeat((minLength - sourceString.length) / addSymbols.length) + sourceString;
-  }
-}
-addressGeneration('1', 2, '0');
+const generateAddress = (sourceString, minLength, addSymbols) =>
+  sourceString.length >= minLength ? sourceString :
+    addSymbols.slice(0, ((minLength - sourceString.length) % addSymbols.length)) + addSymbols.repeat((minLength - sourceString.length) / addSymbols.length) + sourceString;
+generateAddress('1', 2, '0');
 
 // Функция для проверки длины строки
-function checkLength(text, maxLength) {
-  return text.length <= maxLength;
-}
+const checkLength = (text, maxLength) => text.length <= maxLength;
 checkLength('проверяемая строка', 20);
 
 // Возвращает случайное число с плавающей точкой из переданного диапазона включительно
-function randomNumber(min, max, fractionalPart) {
-  return (Math.random() * (max - min + 1) + min).toFixed(fractionalPart);
-}
-randomNumber(5.015125, 5.212125, 3);
+const getRandomNumber = (min, max, fractionalPart) => (Math.random() * (max - min + 1) + min).toFixed(fractionalPart);
+getRandomNumber(5.015125, 5.212125, 3);
