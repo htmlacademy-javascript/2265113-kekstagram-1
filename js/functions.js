@@ -35,3 +35,9 @@ function checkLength(text, maxLength) {
   return text.length <= maxLength;
 }
 checkLength('проверяемая строка', 20);
+
+// Возвращает случайное число с плавающей точкой из переданного диапазона включительно
+function randomNumber(min, max, fractionalPart) {
+  return (Math.random() * (max - min + 1) + min).toFixed(fractionalPart);
+}
+randomNumber(5.015125, 5.212125, 3);
