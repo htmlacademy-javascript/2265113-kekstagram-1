@@ -1,3 +1,8 @@
+const SIMILAR_PHOTO_COUNT = 25;
+const AVATARS_COUNT = 6;
+const LIKES_MIN_COUNT = 15;
+const LIKES_MAX_COUNT = 200;
+const COMMENTS_COUNT = 6;
 const DESCRIPTIONS = [
   'Вот так нужно встречать рассвет!',
   'А вы знали, что этот город считается лучшим местом на земле?',
@@ -25,7 +30,6 @@ const NAMES = [
   'Дмитрий',
   'Кира'
 ];
-const SIMILAR_PHOTO_COUNT = 25;
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -38,7 +42,7 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const createUsersComment = (id) => ({
   id,
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(1, AVATARS_COUNT)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES)
 });
@@ -49,8 +53,8 @@ const createUsersPhoto = (id) => ({
   id,
   url: `photos/${id}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
-  comments: createUsersCommentsList(getRandomInteger(1, 6))
+  likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
+  comments: createUsersCommentsList(getRandomInteger(1, COMMENTS_COUNT))
 });
 
 const createUsersPhotoList = (length) => Array.from({length}, (_, id) => createUsersPhoto(id + 1));
