@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './functions.js';
+import {getRandomInteger, getRandomArrayElement} from './util.js';
 
 const SIMILAR_PHOTO_COUNT = 25;
 const AVATARS_COUNT = 6;
