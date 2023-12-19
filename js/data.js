@@ -1,6 +1,5 @@
-import {getRandomInteger, getRandomArrayElement} from './utils.js';
+import {getRandomInteger, getRandomArrayEl} from './utils.js';
 
-const SIMILAR_PHOTO_COUNT = 25;
 const AVATARS_COUNT = 6;
 const LIKES_MIN_COUNT = 15;
 const LIKES_MAX_COUNT = 200;
@@ -36,8 +35,8 @@ const NAMES = [
 const createUsersComment = (id) => ({
   id,
   avatar: `img/avatar-${getRandomInteger(1, AVATARS_COUNT)}.svg`,
-  message: getRandomArrayElement(MESSAGES),
-  name: getRandomArrayElement(NAMES)
+  message: getRandomArrayEl(MESSAGES),
+  name: getRandomArrayEl(NAMES)
 });
 
 const createUsersCommentsList = (length) => Array.from({length}, (_, id) => createUsersComment(id));
@@ -45,11 +44,11 @@ const createUsersCommentsList = (length) => Array.from({length}, (_, id) => crea
 const createUsersPhoto = (id) => ({
   id,
   url: `photos/${id}.jpg`,
-  description: getRandomArrayElement(DESCRIPTIONS),
+  description: getRandomArrayEl(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
   comments: createUsersCommentsList(getRandomInteger(1, COMMENTS_COUNT))
 });
 
-export const createUsersPhotoList = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, id) => createUsersPhoto(id + 1));
+export const createUsersPhotoList = (length) => Array.from({length}, (_, id) => createUsersPhoto(id + 1));
 
 

@@ -5,6 +5,6 @@ export const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+export const getRandomArrayEl = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 
