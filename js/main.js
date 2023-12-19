@@ -1,3 +1,3 @@
-import {createUsersPhotoList} from './gallery.js';
+import {createUsersPhotoList} from './data.js';
 
 createUsersPhotoList();
