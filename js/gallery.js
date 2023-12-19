@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './util.js';
+import {getRandomInteger, getRandomArrayElement} from './utils.js';
 
 const SIMILAR_PHOTO_COUNT = 25;
 const AVATARS_COUNT = 6;
@@ -50,6 +50,6 @@ const createUsersPhoto = (id) => ({
   comments: createUsersCommentsList(getRandomInteger(1, COMMENTS_COUNT))
 });
 
-const createUsersPhotoList = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, id) => createUsersPhoto(id + 1));
+export const createUsersPhotoList = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, id) => createUsersPhoto(id + 1));
 
-export {createUsersPhotoList};
+
