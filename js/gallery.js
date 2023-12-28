@@ -18,21 +18,29 @@ const createPhotoEl = ({ url, description, likes, comments, id }) => {
 
 const renderPhotos = (photos) => {
   const galleryFragment = document.createDocumentFragment();
+
   photos.forEach((photo) => {
     const photoEl = createPhotoEl(photo);
     galleryFragment.append(photoEl);
   });
+
   picturesContainer.append(galleryFragment);
 };
 
 export const renderGallery = (photos) => {
   picturesContainer.addEventListener('click', (evt) => {
     const photo = evt.target.closest('[data-photo-id]');
+
     if (!photo) {
       return;
     }
 
     const picture = photos.find((item) => item.id === +photo.dataset.photoId);
+
+    if (!picture) {
+      return;
+    }
+
     openBigPicture(picture);
   });
 

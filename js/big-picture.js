@@ -1,52 +1,46 @@
 import {isEscapeKey} from './utils.js';
 
-const body = document.querySelector('body');
+const body = document.body;
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const photoComments = bigPicture.querySelector('.social__comments');
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeBigPicture();
   }
 };
 
 const createComment = ({ avatar, message, name }) => {
-  const newComment = document.createElement('li');
-  newComment.classList.add('social__comment');
+  const newComment = bigPicture.querySelector('.social__comment').cloneNode(true);
 
-  const commentImg = document.createElement('img');
-  commentImg.classList.add('social__picture');
+  const commentImg = newComment.querySelector('.social__picture');
   commentImg.src = avatar;
   commentImg.alt = name;
-  commentImg.width = 35;
-  commentImg.height = 35;
-  newComment.append(commentImg);
-
-  const commentText = document.createElement('p');
-  commentText.classList.add('social__text');
-  commentText.textContent = message;
-  newComment.append(commentText);
+  newComment.querySelector('.social__text').textContent = message;
 
   return newComment;
 };
 
 const renderComments = (comments) => {
   const commentsFragment = document.createDocumentFragment();
+
   comments.forEach((comment) => {
     const commentEl = createComment(comment);
     commentsFragment.append(commentEl);
   });
+
   photoComments.innerHTML = '';
   photoComments.append(commentsFragment);
 };
 
 const renderPhotoDetails = ({ url, likes, comments, description }) => {
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.big-picture__img img').alt = description;
+  bigPictureImg.src = url;
+  bigPictureImg.alt = description;
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
