@@ -8,7 +8,7 @@ const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const photoComments = bigPicture.querySelector('.social__comments');
-const similarCommentTemplate = document.querySelector('#comment').content;
+const similarCommentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 let commentsShown = +bigPicture.querySelector('.current-comments').textContent;
 let pictureData = {};
 
@@ -20,7 +20,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 const createComment = ({ avatar, message, name }) => {
-  const commentEl = similarCommentTemplate.querySelector('.social__comment').cloneNode(true);
+  const commentEl = similarCommentTemplate.cloneNode(true);
 
   const commentImg = commentEl.querySelector('.social__picture');
   commentImg.src = avatar;
