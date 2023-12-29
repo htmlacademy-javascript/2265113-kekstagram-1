@@ -8,7 +8,7 @@ const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const photoComments = bigPicture.querySelector('.social__comments');
-const newComment = document.querySelector('#comment').content;
+const similarCommentTemplate = document.querySelector('#comment').content;
 let commentsShown = +bigPicture.querySelector('.current-comments').textContent;
 let pictureData = {};
 
@@ -20,7 +20,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 const createComment = ({ avatar, message, name }) => {
-  const commentEl = newComment.cloneNode(true);
+  const commentEl = similarCommentTemplate.querySelector('.social__comment').cloneNode(true);
 
   const commentImg = commentEl.querySelector('.social__picture');
   commentImg.src = avatar;
@@ -49,7 +49,8 @@ const renderComments = (comments) => {
 
   photoComments.innerHTML = '';
   photoComments.append(commentsFragment);
-  commentCount.innerHTML = `<span class="current-comments">${commentsShown}</span> из <span class="comments-count">${comments.length}</span> комментариев`;
+  commentCount.querySelector('.current-comments').textContent = commentsShown;
+  commentCount.querySelector('.comments-count').textContent = comments.length;
 };
 
 const renderPhotoDetails = ({ url, likes, comments, description }) => {
@@ -60,21 +61,20 @@ const renderPhotoDetails = ({ url, likes, comments, description }) => {
   bigPicture.querySelector('.social__caption').textContent = description;
 };
 
-const shownComments = () => {
-  renderComments(pictureData.comments);
+const onCommentsLoaderClick = () => {
+  renderComments(pictureData);
 };
 
 export const openBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  pictureData = data;
+  pictureData = data.comments;
 
   renderPhotoDetails(data);
-
   renderComments(data.comments);
 
-  commentsLoader.addEventListener('click', shownComments);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 function closeBigPicture () {
@@ -82,7 +82,7 @@ function closeBigPicture () {
   body.classList.remove('modal-open');
   commentsShown = 0;
 
-  commentsLoader.removeEventListener('click', shownComments);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
