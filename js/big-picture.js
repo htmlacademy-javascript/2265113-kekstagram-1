@@ -8,6 +8,8 @@ const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const photoComments = bigPicture.querySelector('.social__comments');
+const commentsCount = commentCount.querySelector('.comments-count');
+const currentComment = commentCount.querySelector('.current-comments');
 const similarCommentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 let commentsShown = +bigPicture.querySelector('.current-comments').textContent;
 let pictureComments = [];
@@ -49,7 +51,7 @@ const renderComments = (comments) => {
 
   photoComments.innerHTML = '';
   photoComments.append(commentsFragment);
-  commentCount.querySelector('.current-comments').textContent = commentsShown;
+  currentComment.textContent = commentsShown;
 };
 
 const renderPhotoDetails = ({ url, likes, comments, description }) => {
@@ -69,7 +71,7 @@ export const openBigPicture = (data) => {
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
-  commentCount.querySelector('.comments-count').textContent = data.comments.length;
+  commentsCount.textContent = data.comments.length;
   pictureComments = data.comments;
 
   renderPhotoDetails(data);
