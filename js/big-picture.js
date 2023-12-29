@@ -69,12 +69,11 @@ export const openBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   pictureData = data.comments;
 
   renderPhotoDetails(data);
   renderComments(data.comments);
-
-  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 function closeBigPicture () {
