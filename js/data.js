@@ -3,7 +3,7 @@ import {getRandomInteger, getRandomArrayEl} from './utils.js';
 const AVATARS_COUNT = 6;
 const LIKES_MIN_COUNT = 15;
 const LIKES_MAX_COUNT = 200;
-const COMMENTS_COUNT = 6;
+const COMMENTS_COUNT = 15;
 const DESCRIPTIONS = [
   'Вот так нужно встречать рассвет!',
   'А вы знали, что этот город считается лучшим местом на земле?',
