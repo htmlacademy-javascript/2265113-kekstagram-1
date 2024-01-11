@@ -35,6 +35,7 @@ export const renderGallery = (photos) => {
       return;
     }
 
+    evt.preventDefault();
     const picture = photos.find((item) => item.id === +photo.dataset.photoId);
 
     if (!picture) {
