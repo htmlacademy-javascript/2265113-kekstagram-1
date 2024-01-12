@@ -1,4 +1,6 @@
 import {isEscapeKey} from './utils.js';
+import {resetScale} from './scale.js';
+import {resetEffects} from './effects.js';
 
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
@@ -27,6 +29,8 @@ const showModal = () => {
 const hideModal = () => {
   form.reset();
   pristine.reset();
+  resetScale();
+  resetEffects();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
