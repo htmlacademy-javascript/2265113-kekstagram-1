@@ -1408,3 +1408,19 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__field-wrapper__error-title {
+  position: relative;
+  width: 454px;
+  padding: 5px 5px;
+  z-index: 100;
+  margin-top: -20px;
+  margin-left: 64px;
+  font-family: "Open Sans", "Arial", sans-serif;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000000;
+  background-color: #ff0000;
+  border-radius: 5px;
+}
