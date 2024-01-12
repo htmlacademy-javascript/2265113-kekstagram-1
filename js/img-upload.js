@@ -3,6 +3,7 @@ import {isEscapeKey} from './utils.js';
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
+
 const form = document.querySelector('.img-upload__form');
 const uploadFileField = form.querySelector('.img-upload__input');
 const closeButton = form.querySelector('.img-upload__cancel');
