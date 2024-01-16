@@ -1,3 +1,5 @@
+import {currentValue} from './utils.js';
+
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
@@ -16,8 +18,7 @@ const scaleImage = (value) => {
 export const resetScale = () => scaleImage(DEFAULT_SCALE);
 
 const onSmallerButtonClick = () => {
-  const currentValue = parseInt(scaleValue.value, 10);
-  let newValue = currentValue - SCALE_STEP;
+  let newValue = currentValue(scaleValue) - SCALE_STEP;
 
   if (newValue < MIN_SCALE) {
     newValue = MIN_SCALE;
@@ -27,8 +28,7 @@ const onSmallerButtonClick = () => {
 };
 
 const onBiggerButtonClick = () => {
-  const currentValue = parseInt(scaleValue.value, 10);
-  let newValue = currentValue + SCALE_STEP;
+  let newValue = currentValue(scaleValue) + SCALE_STEP;
 
   if (newValue > MAX_SCALE) {
     newValue = MAX_SCALE;
