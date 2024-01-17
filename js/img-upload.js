@@ -1,10 +1,16 @@
 import {isEscapeKey} from './utils.js';
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './notifications.js';
 
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileField = form.querySelector('.img-upload__input');
@@ -13,6 +19,7 @@ const overlay = form.querySelector('.img-upload__overlay');
 const body = document.body;
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -20,20 +27,24 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper__error-title',
 });
 
+export const removeEventListener = () => document.removeEventListener('keydown', onDocumentKeydown);
+
+export const addEventListener = () => document.addEventListener('keydown', onDocumentKeydown);
+
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
+  addEventListener();
 };
 
-const hideModal = () => {
+export const hideModal = () => {
   form.reset();
   pristine.reset();
   resetScale();
   resetEffects();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  removeEventListener();
 };
 
 const isElFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
@@ -51,6 +62,16 @@ uploadFileField.addEventListener('change', () => {
 closeButton.addEventListener('click', () => {
   hideModal();
 });
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
 
@@ -70,7 +91,21 @@ const validateTags = (value) => {
 
 pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+export const setOnFormSubmit = () => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      try {
+        blockSubmitButton();
+        await sendData(new FormData(evt.target));
+        hideModal();
+        showSuccessMessage();
+      } catch {
+        showErrorMessage();
+      }
+      unblockSubmitButton();
+    }
+  });
+};

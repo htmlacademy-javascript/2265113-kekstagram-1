@@ -1,7 +1,5 @@
-import {renderGallery} from './gallery.js';
-import {createUsersPhotoList} from './data.js';
-import './img-upload.js';
+import {setOnFormSubmit} from './img-upload.js';
+import {loadGallery} from './gallery.js';
 
-const photoList = createUsersPhotoList(25);
-
-renderGallery(photoList);
+setOnFormSubmit();
+loadGallery();

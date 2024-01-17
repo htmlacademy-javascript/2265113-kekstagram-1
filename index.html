@@ -25,7 +25,7 @@
 
     <!-- Контейнер для изображений от других пользователей -->
     <section class="pictures  container">
-      <h2 class="pictures__title  visually-hidden">Фотографии других пользователей</h2>
+      <h2 class="pictures__title">Фотографии других пользователей</h2>
 
       <!-- Поле для загрузки нового изображения на сайт -->
       <section class="img-upload">
@@ -218,7 +218,7 @@
 
   <!-- Сообщение с ошибкой загрузки изображения -->
   <template id="error">
-    <section class="error">
+    <section class="error hidden">
       <div class="error__inner">
         <h2 class="error__title">Ошибка загрузки файла</h2>
         <button type="button" class="error__button">Попробовать ещё раз</button>
@@ -228,7 +228,7 @@
 
   <!-- Сообщение об успешной загрузке изображения -->
   <template id="success">
-    <section class="success">
+    <section class="success hidden">
       <div class="success__inner">
         <h2 class="success__title">Изображение успешно загружено</h2>
         <button type="button" class="success__button">Круто!</button>
