@@ -49,8 +49,6 @@ function onDocumentKeydown(evt) {
   if (isEscapeKey(evt.key) && !isElFocused() && !document.querySelector('.stop')) {
     evt.preventDefault();
     hidePosterForm();
-  } else {
-    evt.stopPropagation();
   }
 }
 
