@@ -1,6 +1,6 @@
 import {openBigPicture} from './big-picture.js';
 import {getData} from './api.js';
-import {showAlert} from './notifications.js';
+import {showAlert} from './dialogs.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');

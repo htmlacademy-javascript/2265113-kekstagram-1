@@ -1,3 +1,3 @@
 export const isEscapeKey = (key) => key === 'Escape';
 
-export const currentValue = (scaleValue) => parseInt(scaleValue.value, 10);
+export const convertToNumber = (input) => parseInt(input.value, 10);

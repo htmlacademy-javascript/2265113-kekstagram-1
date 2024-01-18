@@ -1,4 +1,4 @@
-import {currentValue} from './utils.js';
+import {convertToNumber} from './utils.js';
 
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;
@@ -17,8 +17,8 @@ const scaleImage = (value) => {
 
 export const resetScale = () => scaleImage(DEFAULT_SCALE);
 
-const onSmallerButtonClick = () => {
-  let newValue = currentValue(scaleValue) - SCALE_STEP;
+const onScaleDownClick = () => {
+  let newValue = convertToNumber(scaleValue) - SCALE_STEP;
 
   if (newValue < MIN_SCALE) {
     newValue = MIN_SCALE;
@@ -27,8 +27,8 @@ const onSmallerButtonClick = () => {
   scaleImage(newValue);
 };
 
-const onBiggerButtonClick = () => {
-  let newValue = currentValue(scaleValue) + SCALE_STEP;
+const onScaleUpClick = () => {
+  let newValue = convertToNumber(scaleValue) + SCALE_STEP;
 
   if (newValue > MAX_SCALE) {
     newValue = MAX_SCALE;
@@ -37,5 +37,5 @@ const onBiggerButtonClick = () => {
   scaleImage(newValue);
 };
 
-smallerButton.addEventListener('click', onSmallerButtonClick);
-biggerButton.addEventListener('click', onBiggerButtonClick);
+smallerButton.addEventListener('click', onScaleDownClick);
+biggerButton.addEventListener('click', onScaleUpClick);

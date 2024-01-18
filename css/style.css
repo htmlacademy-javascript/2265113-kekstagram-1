@@ -1208,7 +1208,7 @@ main {
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 101;
+  z-index: 4;
 
   background-color: rgba(0, 0, 0, 0.8);
 }
@@ -1413,7 +1413,7 @@ main {
   position: relative;
   width: 454px;
   padding: 5px 5px;
-  z-index: 100;
+  z-index: 3;
   margin-top: -20px;
   margin-left: 64px;
   font-family: "Open Sans", "Arial", sans-serif;
@@ -1424,3 +1424,16 @@ main {
   background-color: #ff0000;
   border-radius: 5px;
 }
+
+.error__alert {
+  position: absolute;
+  padding: 10px 3px;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 30px;
+  background-color: #ff0000;
+}
+
