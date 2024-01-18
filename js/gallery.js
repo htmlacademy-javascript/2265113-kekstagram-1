@@ -1,7 +1,8 @@
 import {openBigPicture} from './big-picture.js';
+import {getData} from './api.js';
+import {showAlert} from './dialogs.js';
 
 const picturesContainer = document.querySelector('.pictures');
-picturesContainer.querySelector('.pictures__title').classList.remove('visually-hidden');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const createPhotoEl = ({ url, description, likes, comments, id }) => {
@@ -46,4 +47,13 @@ export const renderGallery = (photos) => {
   });
 
   renderPhotos(photos);
+};
+
+export const loadGallery = async () => {
+  try {
+    const data = await getData();
+    renderGallery(data);
+  } catch (err) {
+    showAlert(err.message);
+  }
 };
