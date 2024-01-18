@@ -2,7 +2,7 @@ import {isEscapeKey} from './utils.js';
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
-import {showMessage} from './dialogs.js';
+import {showModal} from './dialogs.js';
 
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
@@ -20,6 +20,8 @@ const body = document.body;
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
+const errorModalTemplate = document.querySelector('#error').content.querySelector('.error');
+const successModalTemplate = document.querySelector('#success').content.querySelector('.success');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -46,7 +48,7 @@ const hidePosterForm = () => {
 const isElFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt.key) && !isElFocused() && !document.querySelector('.stop')) {
+  if (isEscapeKey(evt.key) && !isElFocused()) {
     evt.preventDefault();
     hidePosterForm();
   }
@@ -97,9 +99,9 @@ form.addEventListener('submit', async (evt) => {
       toggleSubmitButton();
       await sendData(new FormData(evt.target));
       hidePosterForm();
-      showMessage('success');
+      showModal(successModalTemplate);
     } catch {
-      showMessage('error');
+      showModal(errorModalTemplate);
     } finally {
       toggleSubmitButton();
     }
