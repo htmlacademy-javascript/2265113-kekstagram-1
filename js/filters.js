@@ -35,6 +35,7 @@ const setOnFilterClick = (cb) => {
     filters.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
     clickedFilter.classList.add('img-filters__button--active');
     activeFilter = clickedFilter.id;
+
     cb(getFilteredPhotos());
   });
 };
@@ -42,5 +43,6 @@ const setOnFilterClick = (cb) => {
 export const initializeFilter = (loadedPhotos, cb) => {
   filters.classList.remove('img-filters--inactive');
   photos = [...loadedPhotos];
+
   setOnFilterClick(cb);
 };
