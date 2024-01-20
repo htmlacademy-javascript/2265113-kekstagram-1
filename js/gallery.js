@@ -1,6 +1,10 @@
 import {openBigPicture} from './big-picture.js';
 import {getData} from './api.js';
 import {showAlert} from './dialogs.js';
+import {debounce} from './utils.js';
+import {getFilteredPhotos, initializeFilter} from './filters.js';
+
+const RERENDER_DELAY = 500;
 
 const picturesContainer = document.querySelector('.pictures');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -18,6 +22,8 @@ const createPhotoEl = ({ url, description, likes, comments, id }) => {
 };
 
 const renderPhotos = (photos) => {
+  picturesContainer.querySelectorAll('.picture').forEach((photoEl) => photoEl.remove());
+
   const galleryFragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -52,7 +58,9 @@ export const renderGallery = (photos) => {
 export const loadGallery = async () => {
   try {
     const data = await getData();
-    renderGallery(data);
+    const debouncedRenderGallery = debounce(renderGallery, RERENDER_DELAY);
+    initializeFilter(data, debouncedRenderGallery);
+    renderGallery(getFilteredPhotos());
   } catch (err) {
     showAlert(err.message);
   }
