@@ -61,14 +61,9 @@ closeButton.addEventListener('click', () => {
   hidePosterForm();
 });
 
-const toggleSubmitButton = () => {
-  if (submitButton.disabled === false) {
-    submitButton.disabled = true;
-    submitButton.textContent = SubmitButtonText.SENDING;
-  } else {
-    submitButton.disabled = false;
-    submitButton.textContent = SubmitButtonText.IDLE;
-  }
+const toggleSubmitButton = (boolean) => {
+  submitButton.disabled = boolean;
+  submitButton.textContent = boolean ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
@@ -96,14 +91,14 @@ form.addEventListener('submit', async (evt) => {
 
   if (isValid) {
     try {
-      toggleSubmitButton();
+      toggleSubmitButton(true);
       await sendData(new FormData(evt.target));
       hidePosterForm();
       showModal(successModalTemplate);
     } catch {
       showModal(errorModalTemplate);
     } finally {
-      toggleSubmitButton();
+      toggleSubmitButton(false);
     }
   }
 });
