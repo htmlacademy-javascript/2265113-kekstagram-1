@@ -61,9 +61,9 @@ closeButton.addEventListener('click', () => {
   hidePosterForm();
 });
 
-const toggleSubmitButton = (boolean) => {
-  submitButton.disabled = boolean;
-  submitButton.textContent = boolean ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
+const toggleSubmitButton = (state) => {
+  submitButton.disabled = state;
+  submitButton.textContent = state ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
