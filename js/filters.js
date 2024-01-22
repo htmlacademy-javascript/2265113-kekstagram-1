@@ -3,7 +3,7 @@ import {getFilteredPhotos} from './data.js';
 const filters = document.querySelector('.img-filters');
 let activeFilter = filters.querySelector('[id="filter-default"]');
 
-export const filter = (cb) => {
+export const setOnFilterClick = (cb) => {
   cb(getFilteredPhotos(activeFilter));
 };
 
@@ -21,6 +21,6 @@ export const initializeFilter = (cb) => {
     clickedFilter.classList.add('img-filters__button--active');
     activeFilter = clickedFilter;
 
-    filter(cb);
+    cb();
   });
 };

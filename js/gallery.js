@@ -1,5 +1,5 @@
 import {openBigPicture} from './big-picture.js';
-import {initializeFilter, filter} from './filters.js';
+import {initializeFilter, setOnFilterClick} from './filters.js';
 import {getFilteredPhotos} from './data.js';
 import {loadData} from './data.js';
 import {debounce} from './utils.js';
@@ -57,7 +57,7 @@ export const renderGallery = (photos) => {
 
 export const loadGallery = async () => {
   await loadData();
-  const debouncedFilter = debounce(() => filter(renderGallery), RERENDER_DELAY);
+  const debouncedFilter = debounce(() => setOnFilterClick(renderGallery), RERENDER_DELAY);
   initializeFilter(debouncedFilter);
   renderGallery(getFilteredPhotos('filter-default'));
 };
