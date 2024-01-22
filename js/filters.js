@@ -1,10 +1,11 @@
 import {getFilteredPhotos} from './data.js';
-import {debounce} from './utils.js';
-
-const RERENDER_DELAY = 500;
 
 const filters = document.querySelector('.img-filters');
 let activeFilter = filters.querySelector('[id="filter-default"]');
+
+export const filter = (cb) => {
+  cb(getFilteredPhotos(activeFilter));
+};
 
 export const initializeFilter = (cb) => {
   filters.classList.remove('img-filters--inactive');
@@ -20,6 +21,6 @@ export const initializeFilter = (cb) => {
     clickedFilter.classList.add('img-filters__button--active');
     activeFilter = clickedFilter;
 
-    cb(getFilteredPhotos(activeFilter));
+    filter(cb);
   });
 };

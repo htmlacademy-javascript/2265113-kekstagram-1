@@ -1,7 +1,10 @@
 import {openBigPicture} from './big-picture.js';
-import {initializeFilter} from './filters.js';
+import {initializeFilter, filter} from './filters.js';
 import {getFilteredPhotos} from './data.js';
 import {loadData} from './data.js';
+import {debounce} from './utils.js';
+
+const RERENDER_DELAY = 500;
 
 const picturesContainer = document.querySelector('.temp');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -54,6 +57,7 @@ export const renderGallery = (photos) => {
 
 export const loadGallery = async () => {
   await loadData();
-  initializeFilter(renderGallery);
+  const debouncedFilter = debounce(() => filter(renderGallery), RERENDER_DELAY);
+  initializeFilter(debouncedFilter);
   renderGallery(getFilteredPhotos('filter-default'));
 };
