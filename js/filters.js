@@ -20,6 +20,6 @@ export const initializeFilter = (cb) => {
     clickedFilter.classList.add('img-filters__button--active');
     activeFilter = clickedFilter;
 
-    cb(getFilteredPhotos(activeFilter, RERENDER_DELAY));
+    cb(getFilteredPhotos(activeFilter));
   });
 };
