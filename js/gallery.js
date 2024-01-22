@@ -1,12 +1,9 @@
 import {openBigPicture} from './big-picture.js';
-import {initializeFilter, setOnFilterClick} from './filters.js';
-import {getFilteredPhotos} from './data.js';
-import {loadData} from './data.js';
-import {debounce} from './utils.js';
+import {initializeFilter} from './filters.js';
+import {showAlert} from './dialogs.js';
+import {loadData, getNewData} from './data.js';
 
-const RERENDER_DELAY = 500;
-
-const picturesContainer = document.querySelector('.temp');
+const picturesContainer = document.querySelector('.photos_container');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const createPhotoEl = ({ url, description, likes, comments, id }) => {
@@ -56,8 +53,11 @@ export const renderGallery = (photos) => {
 };
 
 export const loadGallery = async () => {
-  await loadData();
-  const debouncedFilter = debounce(() => setOnFilterClick(renderGallery), RERENDER_DELAY);
-  initializeFilter(debouncedFilter);
-  renderGallery(getFilteredPhotos('filter-default'));
+  try {
+    await loadData();
+    initializeFilter();
+    renderGallery(getNewData());
+  } catch (err) {
+    showAlert(err.message);
+  }
 };
