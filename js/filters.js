@@ -1,9 +1,13 @@
 import {debounce} from './utils.js';
-import {getNewData} from './data.js';
+import {getPhotoList} from './data.js';
 import {renderGallery} from './gallery.js';
 
 const RERENDER_DELAY = 500;
 const PHOTOS_COUNT = 10;
+const Filter = {
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
+};
 
 const filters = document.querySelector('.img-filters');
 let activeFilter = filters.querySelector('[id="filter-default"]');
@@ -13,21 +17,23 @@ const sortRandomly = () => Math.random() - 0.5;
 const sortByComments = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 const getFilteredPhotos = () => {
+  const photos = getPhotoList();
+
   switch (activeFilter.id) {
-    case 'filter-random':
-      return [...getNewData()].sort(sortRandomly).slice(0, PHOTOS_COUNT);
-    case 'filter-discussed':
-      return [...getNewData()].sort(sortByComments);
+    case Filter.RANDOM:
+      return photos.sort(sortRandomly).slice(0, PHOTOS_COUNT);
+    case Filter.DISCUSSED:
+      return photos.sort(sortByComments);
     default:
-      return [...getNewData()];
+      return photos;
   }
 };
 
-function onFiltersClick(evt) {
-  const imgFiltersButton = evt.target.classList.contains('img-filters__button');
-  const activeFilterButton = (evt.target === activeFilter && activeFilter.id !== 'filter-random');
+const renderFilteredPhotos = (evt) => {
+  const isImgFiltersButton = evt.target.classList.contains('img-filters__button');
+  const isActiveFilterButton = (evt.target === activeFilter && activeFilter.id !== 'filter-random');
 
-  if (!imgFiltersButton || activeFilterButton) {
+  if (!isImgFiltersButton || isActiveFilterButton) {
     return;
   }
 
@@ -37,11 +43,11 @@ function onFiltersClick(evt) {
   activeFilter = clickedFilter;
 
   renderGallery(getFilteredPhotos());
-}
+};
 
-const debouncedOnFiltersClick = debounce(onFiltersClick, RERENDER_DELAY);
+const onFiltersClick = debounce(renderFilteredPhotos, RERENDER_DELAY);
 
-export const initializeFilter = () => {
+export const initializeFilters = () => {
   filters.classList.remove('img-filters--inactive');
-  filters.addEventListener('click', debouncedOnFiltersClick);
+  filters.addEventListener('click', onFiltersClick);
 };

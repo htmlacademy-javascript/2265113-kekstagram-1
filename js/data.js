@@ -6,4 +6,4 @@ export const loadData = async () => {
   data = await getData();
 };
 
-export const getNewData = () => data.slice();
+export const getPhotoList = () => data.slice();

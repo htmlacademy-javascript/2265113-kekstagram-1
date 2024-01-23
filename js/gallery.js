@@ -1,9 +1,9 @@
 import {openBigPicture} from './big-picture.js';
-import {initializeFilter} from './filters.js';
+import {initializeFilters} from './filters.js';
 import {showAlert} from './dialogs.js';
-import {loadData, getNewData} from './data.js';
+import {loadData, getPhotoList} from './data.js';
 
-const picturesContainer = document.querySelector('.photos_container');
+const picturesContainer = document.querySelector('.photos-container');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const createPhotoEl = ({ url, description, likes, comments, id }) => {
@@ -55,8 +55,8 @@ export const renderGallery = (photos) => {
 export const loadGallery = async () => {
   try {
     await loadData();
-    initializeFilter();
-    renderGallery(getNewData());
+    initializeFilters();
+    renderGallery(getPhotoList());
   } catch (err) {
     showAlert(err.message);
   }
