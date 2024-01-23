@@ -1437,3 +1437,6 @@ main {
   background-color: #ff0000;
 }
 
+.photos-container {
+  display: contents;
+}

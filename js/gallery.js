@@ -1,8 +1,9 @@
 import {openBigPicture} from './big-picture.js';
-import {getData} from './api.js';
+import {initializeFilters} from './filters.js';
 import {showAlert} from './dialogs.js';
+import {loadData, getPhotoList} from './data.js';
 
-const picturesContainer = document.querySelector('.pictures');
+const picturesContainer = document.querySelector('.photos-container');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const createPhotoEl = ({ url, description, likes, comments, id }) => {
@@ -18,6 +19,8 @@ const createPhotoEl = ({ url, description, likes, comments, id }) => {
 };
 
 const renderPhotos = (photos) => {
+  picturesContainer.innerHTML = '';
+
   const galleryFragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -51,8 +54,9 @@ export const renderGallery = (photos) => {
 
 export const loadGallery = async () => {
   try {
-    const data = await getData();
-    renderGallery(data);
+    await loadData();
+    initializeFilters();
+    renderGallery(getPhotoList());
   } catch (err) {
     showAlert(err.message);
   }
