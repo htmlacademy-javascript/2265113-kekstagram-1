@@ -4,6 +4,7 @@ import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
 import {showModal} from './dialogs.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
@@ -14,6 +15,8 @@ const SubmitButtonText = {
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileField = form.querySelector('.img-upload__input');
+const preview = document.querySelector('.img-upload__preview img');
+const effectsPreview = document.querySelectorAll('.effects__preview');
 const closeButton = form.querySelector('.img-upload__cancel');
 const overlay = form.querySelector('.img-upload__overlay');
 const body = document.body;
@@ -103,3 +106,16 @@ form.addEventListener('submit', async (evt) => {
   }
 });
 
+uploadFileField.addEventListener('change', () => {
+  const file = uploadFileField.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+    effectsPreview.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url("${preview.src}")`;
+    });
+  }
+});
