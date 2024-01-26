@@ -6,8 +6,8 @@ const MAX_SCALE = 100;
 const DEFAULT_SCALE = 100;
 const MAX_PERCENT = 100;
 
-const smallerButton = document.querySelector('.scale__control--smaller');
-const biggerButton = document.querySelector('.scale__control--bigger');
+const scaleDownButton = document.querySelector('.scale__control--smaller');
+const scaleUpButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
 const imgPreview = document.querySelector('.img-upload__preview img');
 
@@ -30,5 +30,5 @@ const onScaleUpClick = () => {
   scaleImage(Math.min(newValue, MAX_SCALE));
 };
 
-smallerButton.addEventListener('click', onScaleDownClick);
-biggerButton.addEventListener('click', onScaleUpClick);
+scaleDownButton.addEventListener('click', onScaleDownClick);
+scaleUpButton.addEventListener('click', onScaleUpClick);

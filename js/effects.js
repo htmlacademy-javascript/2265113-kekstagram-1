@@ -1,5 +1,5 @@
 const Effect = {
-  'default': {
+  default: {
     filter: 'none',
     min: 0,
     max: 100,
@@ -91,12 +91,7 @@ const onEffectsChange = (evt) => {
     return;
   }
 
-  currentEffect = Effect[evt.target.value];
-
-  if (!currentEffect) {
-    return;
-  }
-
+  currentEffect = Effect[evt.target.value] ?? Effect.default;
   imgPreview.className = `effects__preview--${currentEffect.name}`;
 
   updateSliderOptions();
