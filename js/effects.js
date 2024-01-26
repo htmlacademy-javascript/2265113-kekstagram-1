@@ -1,71 +1,65 @@
-const EFFECTS = [
-  {
-    name: 'none',
+const Effect = {
+  default: {
     filter: 'none',
     min: 0,
     max: 100,
     step: 1,
     unit: ''
   },
-  {
-    name: 'chrome',
+  'chrome': {
     filter: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'sepia',
+  'sepia': {
     filter: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'marvin',
+  'marvin': {
     filter: 'invert',
     min: 0,
     max: 100,
     step: 1,
     unit: '%'
   },
-  {
-    name: 'phobos',
+  'phobos': {
     filter: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     unit: 'px'
   },
-  {
-    name: 'heat',
+  'heat': {
     filter: 'brightness',
     min: 1,
     max: 3,
     step: 0.1,
     unit: ''
   }
-];
-const DEFAULT_EFFECT = EFFECTS[0];
+};
 
 const imgPreview = document.querySelector('.img-upload__preview img');
 const imgEffects = document.querySelector('.img-upload__effects');
 const effectValue = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = document.querySelector('.effect-level__slider');
-let currentEffect = DEFAULT_EFFECT;
 
-const isDefault = () => currentEffect === DEFAULT_EFFECT;
+let currentEffect = Effect.default;
+
+const isDefault = () => currentEffect === Effect.default;
 
 noUiSlider.create(slider, {
   range: {
-    min: DEFAULT_EFFECT.min,
-    max: DEFAULT_EFFECT.max
+    min: Effect.default.min,
+    max: Effect.default.max
   },
-  step: DEFAULT_EFFECT.step,
-  start: DEFAULT_EFFECT.max,
+  step: Effect.default.step,
+  start: Effect.default.max,
   connect: 'lower'
 });
 
@@ -87,7 +81,7 @@ const updateSliderOptions = () => {
 };
 
 export const resetEffects = () => {
-  currentEffect = DEFAULT_EFFECT;
+  currentEffect = Effect.default;
 
   updateSliderOptions();
 };
@@ -97,7 +91,7 @@ const onEffectsChange = (evt) => {
     return;
   }
 
-  currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  currentEffect = Effect[evt.target.value] ?? Effect.default;
   imgPreview.className = `effects__preview--${currentEffect.name}`;
 
   updateSliderOptions();
@@ -107,7 +101,7 @@ const onSliderUpdate = () => {
   const sliderValue = slider.noUiSlider.get();
   effectValue.value = sliderValue;
 
-  imgPreview.style.filter = isDefault() ? DEFAULT_EFFECT.filter : `${currentEffect.filter}(${sliderValue}${currentEffect.unit})`;
+  imgPreview.style.filter = isDefault() ? Effect.default.filter : `${currentEffect.filter}(${sliderValue}${currentEffect.unit})`;
 };
 
 imgEffects.addEventListener('change', onEffectsChange);

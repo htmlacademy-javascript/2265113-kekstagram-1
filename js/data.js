@@ -1,9 +1,9 @@
-import {getData} from './api.js';
+import {getPhotos} from './api.js';
 
-let data = [];
+let photos = [];
 
 export const loadData = async () => {
-  data = await getData();
+  photos = await getPhotos();
 };
 
-export const getPhotoList = () => data.slice();
+export const getPhotoList = () => photos.slice();

@@ -10,6 +10,7 @@ const Filter = {
 };
 
 const filters = document.querySelector('.img-filters');
+
 let activeFilter = filters.querySelector('[id="filter-default"]');
 
 const sortRandomly = () => Math.random() - 0.5;

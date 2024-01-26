@@ -1,13 +1,14 @@
 import {isEscapeKey} from './utils.js';
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
-import {sendData} from './api.js';
+import {sendPhotoData} from './api.js';
 import {showModal} from './dialogs.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
+
 const SubmitButtonText = {
   IDLE: 'Сохранить',
   SENDING: 'Сохраняю...'
@@ -48,10 +49,10 @@ const hidePosterForm = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const isElFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
+const isTextFieldActive = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt.key) && !isElFocused()) {
+  if (isEscapeKey(evt.key) && !isTextFieldActive()) {
     evt.preventDefault();
     hidePosterForm();
   }
@@ -69,7 +70,7 @@ const toggleSubmitButton = (state) => {
   submitButton.textContent = state ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
-const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
+const isTagValid = (tag) => VALID_SYMBOLS.test(tag);
 
 const isTagsUnique = (tags) => {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
@@ -82,11 +83,10 @@ const isTagsCountValid = (tags) => tags.length <= MAX_HASHTAG_COUNT;
 const validateTags = (value) => {
   const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
 
-  return tags.every(isValidTag) && isTagsUnique(tags) && isTagsCountValid(tags);
+  return tags.every(isTagValid) && isTagsUnique(tags) && isTagsCountValid(tags);
 };
 
 pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
-
 
 form.addEventListener('submit', async (evt) => {
   evt.preventDefault();
@@ -95,7 +95,7 @@ form.addEventListener('submit', async (evt) => {
   if (isValid) {
     try {
       toggleSubmitButton(true);
-      await sendData(new FormData(evt.target));
+      await sendPhotoData(new FormData(evt.target));
       hidePosterForm();
       showModal(successModalTemplate);
     } catch {
@@ -110,7 +110,7 @@ uploadFileField.addEventListener('change', () => {
   const file = uploadFileField.files[0];
   const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
 
   if (matches) {
     preview.src = URL.createObjectURL(file);
