@@ -1,7 +1,5 @@
 import {openBigPicture} from './big-picture.js';
-import {initializeFilters} from './filters.js';
-import {showAlert} from './dialogs.js';
-import {loadData, getPhotoList} from './data.js';
+import {getPhotoList} from './data.js';
 
 const picturesContainer = document.querySelector('.photos-container');
 const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -18,7 +16,7 @@ const createPhotoEl = ({ url, description, likes, comments, id }) => {
   return photoEl;
 };
 
-const renderPhotos = (photos) => {
+export const renderGallery = (photos) => {
   picturesContainer.innerHTML = '';
 
   const galleryFragment = document.createDocumentFragment();
@@ -31,33 +29,20 @@ const renderPhotos = (photos) => {
   picturesContainer.append(galleryFragment);
 };
 
-export const renderGallery = (photos) => {
-  picturesContainer.addEventListener('click', (evt) => {
-    const photo = evt.target.closest('[data-photo-id]');
+picturesContainer.addEventListener('click', (evt) => {
+  const photo = evt.target.closest('[data-photo-id]');
 
-    if (!photo) {
-      return;
-    }
-
-    evt.preventDefault();
-    const picture = photos.find((item) => item.id === +photo.dataset.photoId);
-
-    if (!picture) {
-      return;
-    }
-
-    openBigPicture(picture);
-  });
-
-  renderPhotos(photos);
-};
-
-export const loadGallery = async () => {
-  try {
-    await loadData();
-    initializeFilters();
-    renderGallery(getPhotoList());
-  } catch (err) {
-    showAlert(err.message);
+  if (!photo) {
+    return;
   }
-};
+
+  evt.preventDefault();
+  const photos = getPhotoList();
+  const picture = photos.find((item) => item.id === +photo.dataset.photoId);
+
+  if (!picture) {
+    return;
+  }
+
+  openBigPicture(picture);
+});

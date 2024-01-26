@@ -1,9 +1,11 @@
 import {isEscapeKey} from './utils.js';
 
 const COMMENTS_PER_STEP = 5;
+const DEFAULT_COMMENTS_SHOWN = 0;
+
 const body = document.body;
 const bigPicture = document.querySelector('.big-picture');
-const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -11,6 +13,7 @@ const photoComments = bigPicture.querySelector('.social__comments');
 const commentsCount = commentCount.querySelector('.comments-count');
 const currentComment = commentCount.querySelector('.current-comments');
 const similarCommentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+
 let commentsShown = +bigPicture.querySelector('.current-comments').textContent;
 let pictureComments = [];
 
@@ -21,7 +24,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const createComment = ({ avatar, message, name }) => {
+const createCommentEl = ({ avatar, message, name }) => {
   const commentEl = similarCommentTemplate.cloneNode(true);
 
   const commentImg = commentEl.querySelector('.social__picture');
@@ -45,7 +48,7 @@ const renderComments = (comments) => {
   const commentsFragment = document.createDocumentFragment();
 
   for (let i = 0; i < commentsShown; i++) {
-    const commentEl = createComment(comments[i]);
+    const commentEl = createCommentEl(comments[i]);
     commentsFragment.append(commentEl);
   }
 
@@ -81,13 +84,13 @@ export const openBigPicture = (data) => {
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  commentsShown = 0;
+  commentsShown = DEFAULT_COMMENTS_SHOWN;
 
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-bigPictureClose.addEventListener('click', () => {
+bigPictureCloseButton.addEventListener('click', () => {
   closeBigPicture();
 });
 

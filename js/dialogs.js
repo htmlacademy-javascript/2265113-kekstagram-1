@@ -25,11 +25,11 @@ const hideModal = () => {
 
 export const showModal = (template) => {
   activeModal = template.cloneNode(true);
-  const modalButton = activeModal.querySelector('.modal__button');
+  const closeButton = activeModal.querySelector('.modal__button');
 
   document.body.append(activeModal);
 
-  modalButton.addEventListener('click', () => {
+  closeButton.addEventListener('click', () => {
     hideModal();
   });
   document.addEventListener('keydown', onDocumentKeydown, true);
@@ -37,10 +37,9 @@ export const showModal = (template) => {
 };
 
 function onDocumentKeydown(evt) {
-  evt.stopPropagation();
-
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
+    evt.stopPropagation();
     hideModal();
   }
 }

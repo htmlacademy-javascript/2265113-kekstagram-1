@@ -1,6 +1,8 @@
+const PARSE_RADIX = 10;
+
 export const isEscapeKey = (key) => key === 'Escape';
 
-export const convertToNumber = (input) => parseInt(input.value, 10);
+export const convertToNumber = (input) => parseInt(input.value, PARSE_RADIX);
 
 export const debounce = (cb, timeoutDelay) => {
   let timeoutId;
