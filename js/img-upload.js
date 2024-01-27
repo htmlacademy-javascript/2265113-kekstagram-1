@@ -6,7 +6,7 @@ import {showModal} from './dialogs.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const TAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
 
 const SubmitButtonText = {
@@ -70,18 +70,14 @@ const toggleSubmitButton = (state) => {
   submitButton.textContent = state ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
-const isTagValid = (tag) => VALID_SYMBOLS.test(tag);
+const isTagValid = (tag) => TAG_PATTERN.test(tag);
 
-const isTagsUnique = (tags) => {
-  const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
-
-  return lowerCaseTags.length === new Set(lowerCaseTags).size;
-};
+const isTagsUnique = (tags) => tags.length === new Set(tags).size;
 
 const isTagsCountValid = (tags) => tags.length <= MAX_HASHTAG_COUNT;
 
 const validateTags = (value) => {
-  const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
+  const tags = value.trim().split(' ').filter((tag) => tag.trim().length).map((tag) => tag.toLowerCase());
 
   return tags.every(isTagValid) && isTagsUnique(tags) && isTagsCountValid(tags);
 };
