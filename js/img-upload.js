@@ -6,7 +6,7 @@ import {showModal} from './dialogs.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const TAG_ERROR_TEXT = 'Не верно указан Хэш-тег';
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/;
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
 
 const SubmitButtonText = {
